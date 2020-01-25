@@ -4,12 +4,12 @@ import { spawn } from "child_process"
 
 const { app } = expressWs(express())
 
-app.use(express.static(__dirname+"/../client/assets/"))
+app.use(express.static(__dirname + "/../client/assets/"))
 
 app.ws("/to_ffmpeg", (ws, req) => {
     const url = new URL(req.query.rtmp_url)
     if (url.protocol !== "rtmp:") {
-        ws.send(JSON.stringify({type: "error", message: "invalid url"}), () => {
+        ws.send(JSON.stringify({ type: "error", message: "invalid url" }), () => {
             ws.close()
         })
     }

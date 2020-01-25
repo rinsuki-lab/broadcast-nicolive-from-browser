@@ -5,17 +5,21 @@
   "license": "MIT",
   "scripts": {
     "start": "node dist/server/index.js",
-    "build": "tsc && parcel build -d dist/client/assets ./src/client/index.html"
+    "build": "tsc && parcel build -d dist/client/assets ./src/client/index.html",
+    "format": "prettier 'src/**/*'"
   },
   "devDependencies": {
     "@types/express": "^4.17.2",
     "@types/express-ws": "^3.0.0",
     "parcel": "^1.12.4",
+    "prettier": "^1.19.1",
     "typescript": "^3.7.5"
   },
   "dependencies": {
     "express": "^4.17.1",
     "express-ws": "^4.0.0"
   },
-  "browserslist": ["last 1 firefox versions"]
+  "browserslist": [
+    "last 1 firefox versions"
+  ]
 }
