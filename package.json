@@ -1,8 +1,12 @@
 {
   "name": "broadcast-nicolive-from-browser",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
   "license": "MIT",
+  "scripts": {
+    "start": "node dist/server/index.js",
+    "build": "tsc && parcel build -d dist/client/assets ./src/client/index.html"
+  },
   "devDependencies": {
     "@types/express": "^4.17.2",
     "@types/express-ws": "^3.0.0",

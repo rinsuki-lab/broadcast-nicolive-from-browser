@@ -29,4 +29,6 @@ app.ws("/to_ffmpeg", (ws, req) => {
     }
 })
 
-app.listen(3000, "localhost")
+app.listen(3000, "localhost", () => {
+    console.log("available in http://localhost:3000")
+})
