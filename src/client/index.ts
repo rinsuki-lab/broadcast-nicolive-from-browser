@@ -72,7 +72,7 @@ document.getElementById("start_broadcast")!.addEventListener("click", async () =
     })
 
     ws.onopen = () => {
-        recorder.start(1)
+        recorder.start(1000)
     }
 
     ws.onmessage = e => {
