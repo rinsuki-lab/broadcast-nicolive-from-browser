@@ -40,6 +40,37 @@ declare class MediaRecorder {
     static isTypeSupported(mimeType: string): boolean
 }
 
+interface HTMLCanvasElement {
+    captureStream(fps?: number): MediaStream
+}
+
+const canvas = document.getElementById("canvas") as HTMLCanvasElement
+const context = canvas.getContext("2d")!
+const previewVideo = document.createElement("video")
+previewVideo.muted = true
+previewVideo.autoplay = true
+
+function writePerFrame() {
+    context.fillStyle = "red"
+    context.fillRect(0, 0, 1280, 720)
+    context.drawImage(previewVideo, 0, 0, 1280, 720-24)
+    context.font = "20px monospace"
+    context.fillStyle = "white"
+    context.fillRect(0, 720-24, 1280, 24)
+    context.fillStyle = "black"
+    context.fillText(new Date().toString(), 0, 720-2)
+    requestAnimationFrame(writePerFrame)
+}
+
+writePerFrame()
+
+document.getElementById("change_stream")!.addEventListener("click", async () => {
+    const stream = await navigator.mediaDevices.getDisplayMedia({
+        video: true
+    })
+    previewVideo.srcObject = stream
+})
+
 const wsUrl = location.origin.replace(/^http/, "ws")
 document.getElementById("start_broadcast")!.addEventListener("click", async () => {
     // get user media
@@ -49,10 +80,7 @@ document.getElementById("start_broadcast")!.addEventListener("click", async () =
     if (!MediaRecorder.isTypeSupported(mimeType))
         return alert(`このブラウザは ${mimeType} によるエンコードをサポートしていないため利用できません`)
 
-    const stream = await navigator.mediaDevices.getDisplayMedia({
-        video: true
-    })
-    ;(<HTMLVideoElement>document.getElementById("preview")!).srcObject = stream
+    const stream = canvas.captureStream(30)
 
     const recorder = new MediaRecorder(stream, {
         mimeType,
